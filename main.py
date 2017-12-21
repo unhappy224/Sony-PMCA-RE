@@ -159,12 +159,14 @@ class BaseHandler(webapp2.RequestHandler):
    data = {}
   data['projectRepo'] = (config.githubProjectUser, config.githubProjectRepo)
   self.response.write(jinjaEnv.get_template(name).render(data))
+  self.response.headers.add_header('Access-Control-Allow-Origin', '*')
 
  def output(self, mimeType, data, filename = None):
   """Outputs a file with the given mimetype"""
   self.response.content_type = mimeType
   if filename:
    self.response.headers['Content-Disposition'] = 'attachment;filename="%s"' % filename
+   self.response.headers.add_header('Access-Control-Allow-Origin', '*')
   self.response.write(data)
 
 
